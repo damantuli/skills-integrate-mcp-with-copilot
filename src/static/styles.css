@@ -1,3 +1,82 @@
+/* Project Ideas UI Improvements */
+#project-ideas-container {
+  margin-top: 2.5rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+#project-ideas-container h3 {
+  margin-bottom: 1.2rem;
+  color: #2d3748;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 1.2rem 1rem 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-row textarea {
+  flex: 1;
+  min-height: 60px;
+  resize: vertical;
+}
+
+#project-ideas-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.project-idea-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  padding: 1.2rem 1rem;
+  min-width: 260px;
+  max-width: 340px;
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-left: 5px solid #3182ce;
+}
+
+.project-idea-card h4 {
+  margin: 0 0 0.2em 0;
+  color: #2b6cb0;
+  font-size: 1.15rem;
+}
+
+.project-idea-card p {
+  margin: 0.1em 0;
+  color: #444;
+  font-size: 0.98rem;
+}
+
+.project-idea-card strong {
+  color: #2b6cb0;
+}
+
+.project-idea-card .skills {
+  font-style: italic;
+  color: #555;
+}
 * {
   box-sizing: border-box;
   margin: 0;
