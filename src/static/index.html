@@ -21,6 +21,28 @@
         </div>
       </section>
 
+      <section id="project-ideas-container">
+        <h3>💡 Project Ideas</h3>
+        <form id="project-idea-form" class="card form-card">
+          <div class="form-row">
+            <input type="text" id="project-title" required placeholder="Project Title" />
+            <input type="text" id="project-skills" placeholder="Skills Needed (comma separated)" />
+          </div>
+          <div class="form-row">
+            <input type="email" id="project-author" placeholder="Your Email (optional)" />
+          </div>
+          <div class="form-row">
+            <textarea id="project-description" required placeholder="Describe your project idea..."></textarea>
+          </div>
+          <div class="form-row">
+            <button type="submit">➕ Post Project Idea</button>
+          </div>
+        </form>
+        <div id="project-ideas-list" class="project-ideas-list">
+          <!-- Project ideas will be loaded here -->
+        </div>
+      </section>
+
       <section id="signup-container">
         <h3>Sign Up for an Activity</h3>
         <form id="signup-form">

@@ -4,7 +4,74 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
-  // Function to fetch activities from API
+  // Project Ideas Elements
+  const projectIdeasList = document.getElementById("project-ideas-list");
+  const projectIdeaForm = document.getElementById("project-idea-form");
+
+  // Fetch and display project ideas
+  async function fetchProjectIdeas() {
+    try {
+      const response = await fetch("/project-ideas");
+      const ideas = await response.json();
+      projectIdeasList.innerHTML = "";
+      if (ideas.length === 0) {
+        projectIdeasList.innerHTML = "<p>No project ideas posted yet.</p>";
+        return;
+      }
+      ideas.forEach((idea) => {
+        const ideaCard = document.createElement("div");
+        ideaCard.className = "project-idea-card";
+        // Format skills as chips
+        let skillsHTML = "<span class='skills'>None specified</span>";
+        if (idea.skills_needed && idea.skills_needed.trim() !== "") {
+          const skills = idea.skills_needed.split(",").map(s => s.trim()).filter(Boolean);
+          skillsHTML = skills.map(skill => `<span class='skills'>${skill}</span>`).join(", ");
+        }
+        ideaCard.innerHTML = `
+          <h4>${idea.title}</h4>
+          <p>${idea.description}</p>
+          <p><strong>Skills Needed:</strong> ${skillsHTML}</p>
+          <p><strong>Posted by:</strong> ${idea.author_email ? `<a href='mailto:${idea.author_email}'>${idea.author_email}</a>` : "Anonymous"}</p>
+        `;
+        projectIdeasList.appendChild(ideaCard);
+      });
+    } catch (error) {
+      projectIdeasList.innerHTML = "<p>Failed to load project ideas.</p>";
+      console.error("Error fetching project ideas:", error);
+    }
+  }
+
+  // Handle project idea form submission
+  if (projectIdeaForm) {
+    projectIdeaForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const title = document.getElementById("project-title").value;
+      const description = document.getElementById("project-description").value;
+      const skills_needed = document.getElementById("project-skills").value;
+      const author_email = document.getElementById("project-author").value;
+      try {
+        const params = new URLSearchParams({
+          title,
+          description,
+          skills_needed,
+          author_email,
+        });
+        const response = await fetch(`/project-ideas?${params.toString()}`, {
+          method: "POST",
+        });
+        const result = await response.json();
+        if (response.ok) {
+          projectIdeaForm.reset();
+          fetchProjectIdeas();
+        } else {
+          alert(result.detail || "Failed to post project idea.");
+        }
+      } catch (error) {
+        alert("Failed to post project idea.");
+        console.error("Error posting project idea:", error);
+      }
+    });
+  }
   async function fetchActivities() {
     try {
       const response = await fetch("/activities");
@@ -157,4 +224,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize app
   fetchActivities();
+  fetchProjectIdeas();
 });

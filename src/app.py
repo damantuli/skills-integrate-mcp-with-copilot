@@ -12,12 +12,14 @@ import os
 from pathlib import Path
 
 app = FastAPI(title="Mergington High School API",
-              description="API for viewing and signing up for extracurricular activities")
+              description="API for viewing and signing up for extracurricular activities and posting project ideas")
 
 # Mount the static files directory
 current_dir = Path(__file__).parent
 app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
           "static")), name="static")
+
+from typing import List, Dict
 
 # In-memory activity database
 activities = {
@@ -75,8 +77,29 @@ activities = {
         "max_participants": 12,
         "participants": ["charlotte@mergington.edu", "henry@mergington.edu"]
     }
+
 }
 
+# In-memory project ideas database
+project_ideas: List[Dict] = []
+@app.get("/project-ideas")
+def list_project_ideas():
+    """List all posted project ideas"""
+    return project_ideas
+
+
+@app.post("/project-ideas")
+def post_project_idea(title: str, description: str, skills_needed: str = "", author_email: str = ""):
+    """Post a new project idea"""
+    idea = {
+        "title": title,
+        "description": description,
+        "skills_needed": skills_needed,
+        "author_email": author_email,
+        "collaborators": []
+    }
+    project_ideas.append(idea)
+    return {"message": "Project idea posted", "idea": idea}
 
 @app.get("/")
 def root():
